@@ -1,0 +1,545 @@
+/* ==========================================================================
+   EmPay HRMS - Premium Glassmorphism Overrides & Additions
+   ========================================================================== */
+
+:root {
+  /* Overriding variables for Dark/Glass Theme */
+  --primary-color: #818cf8;
+  --primary-hover: #6366f1;
+  --primary-light: rgba(99, 102, 241, 0.2);
+  
+  --secondary-color: #34d399;
+  --secondary-hover: #10b981;
+  --secondary-light: rgba(16, 185, 129, 0.2);
+
+  --accent-color: #c084fc;
+  
+  --danger-color: #f87171;
+  --danger-hover: #ef4444;
+  --danger-light: rgba(239, 68, 68, 0.2);
+
+  --warning-color: #fbbf24;
+  --warning-hover: #f59e0b;
+  --warning-light: rgba(245, 158, 11, 0.2);
+
+  --info-color: #60a5fa;
+  --info-hover: #3b82f6;
+  --info-light: rgba(59, 130, 246, 0.2);
+
+  --success-color: #34d399;
+
+  /* Backgrounds & Surfaces (Glassy & Dark) */
+  --bg-main: transparent; /* Rely on body background */
+  --bg-surface: rgba(15, 23, 42, 0.5);
+  --bg-sidebar: rgba(15, 23, 42, 0.4);
+  --bg-sidebar-hover: rgba(255, 255, 255, 0.05);
+  --bg-alt: rgba(255, 255, 255, 0.02);
+
+  /* Typography */
+  --text-main: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-inverse: #0f172a;
+  --text-sidebar: #cbd5e1;
+
+  /* Borders & Shadows */
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-radius-sm: 8px;
+  --border-radius: 12px;
+  --border-radius-lg: 20px;
+  
+  --shadow-sm: 0 4px 15px 0 rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --shadow-lg: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
+  --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.4);
+
+  /* Primary Gradient custom addition */
+  --primary-gradient: linear-gradient(135deg, #6366f1, #a855f7);
+}
+
+/* ==========================================================================
+   Body & Background
+   ========================================================================== */
+body {
+  background: linear-gradient(135deg, #0f172a, #1e1b4b) !important;
+  color: var(--text-main);
+}
+
+.app-container {
+  background-color: transparent !important;
+}
+
+/* ==========================================================================
+   Animated Background Orbs
+   ========================================================================== */
+.bg-orbs {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.6;
+  animation: float 20s infinite ease-in-out;
+}
+
+.orb-1 {
+  width: 400px;
+  height: 400px;
+  background: rgba(99, 102, 241, 0.3);
+  top: -100px;
+  left: -100px;
+  animation-delay: 0s;
+}
+
+.orb-2 {
+  width: 500px;
+  height: 500px;
+  background: rgba(168, 85, 247, 0.3);
+  bottom: -150px;
+  right: -100px;
+  animation-delay: -5s;
+}
+
+.orb-3 {
+  width: 300px;
+  height: 300px;
+  background: rgba(236, 72, 153, 0.3);
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation-delay: -10s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -50px) scale(1.1); }
+  66% { transform: translate(-20px, 20px) scale(0.9); }
+}
+
+/* ==========================================================================
+   Glassmorphism Globals
+   ========================================================================== */
+.card, .modal-content, .topbar, .sidebar, .profile-card, .data-table th, .card-header, .card-footer {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.card, .modal-content, .profile-card {
+  background: var(--bg-surface) !important;
+  border: 1px solid var(--border-color) !important;
+  box-shadow: var(--shadow-md) !important;
+}
+
+.sidebar {
+  background: rgba(15, 23, 42, 0.4) !important;
+  border-right: 1px solid var(--border-color) !important;
+}
+
+.topbar {
+  background: rgba(15, 23, 42, 0.4) !important;
+  border-bottom: 1px solid var(--border-color) !important;
+}
+
+.card-header, .card-footer, .modal-header, .modal-footer, .data-table th {
+  background-color: rgba(255, 255, 255, 0.02) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-main) !important;
+}
+
+.data-table th, .data-table td {
+  border-bottom: 1px solid var(--border-color) !important;
+  color: var(--text-secondary);
+}
+
+.data-table tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.form-control, input, select, textarea {
+  background-color: rgba(15, 23, 42, 0.6) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-main) !important;
+}
+
+.form-control:focus, input:focus, select:focus, textarea:focus {
+  border-color: var(--primary-color) !important;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2) !important;
+  background-color: rgba(15, 23, 42, 0.8) !important;
+}
+
+.btn-primary {
+  background: var(--primary-gradient) !important;
+  border: none !important;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3) !important;
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4) !important;
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: var(--text-main) !important;
+  border-color: var(--border-color) !important;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: var(--border-radius-lg);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* ==========================================================================
+   Auth Page Enhancements
+   ========================================================================== */
+.auth-page {
+  background: transparent !important;
+  position: relative;
+  z-index: 10;
+  /* Allow vertical scrolling so tall forms (signup) are not clipped */
+  overflow-y: auto !important;
+  align-items: flex-start !important;
+  padding: 2rem !important;
+}
+
+/* Center the auth wrapper when there is room; scroll when there isn't */
+.auth-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  /* Push the card to the vertical center on tall viewports */
+  min-height: calc(100vh - 4rem);
+  align-items: center;
+}
+
+/* Cap the card so it never overflows the visible area awkwardly */
+.auth-card {
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+.auth-card {
+  background: rgba(15, 23, 42, 0.6) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid var(--border-color) !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+
+.gradient-text {
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.auth-logo-wrapper {
+  width: 64px;
+  height: 64px;
+  background: var(--primary-gradient);
+  border-radius: var(--border-radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  box-shadow: 0 8px 16px rgba(99, 102, 241, 0.3);
+  font-size: 28px;
+  color: white;
+}
+
+.auth-logo-wrapper i {
+  color: white !important;
+}
+
+.input-icon-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1;
+  pointer-events: none;
+  transition: color var(--transition-normal);
+  z-index: 2;
+}
+
+.input-icon-wrapper .form-control {
+  padding-left: 2.85rem !important;
+  padding-top: 0.7rem !important;
+  padding-bottom: 0.7rem !important;
+}
+
+.input-icon-wrapper:focus-within .input-icon {
+  color: var(--primary-color);
+}
+
+.demo-creds {
+  background: rgba(15, 23, 42, 0.4) !important;
+  border: 1px solid var(--border-color) !important;
+}
+
+/* Button Glow Effect */
+.btn-glow {
+  position: relative;
+  overflow: hidden;
+}
+.btn-text {
+  position: relative;
+  z-index: 2;
+}
+.btn-shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-20deg);
+  animation: shine 3s infinite;
+  z-index: 1;
+}
+
+@keyframes shine {
+  0% { left: -100%; }
+  20% { left: 200%; }
+  100% { left: 200%; }
+}
+
+.glass-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  padding: 0.25rem 0.25rem 0.25rem 1rem;
+  border-radius: 9999px;
+  transition: var(--transition-fast);
+}
+
+.glass-pill:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.glass-btn {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-main) !important;
+}
+
+.glass-btn:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.gradient-avatar {
+  background: var(--primary-gradient) !important;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
+}
+
+/* ==========================================================================
+   Sidebar & Navigation Spacing Improvements
+   ========================================================================== */
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.875rem 1.25rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-sidebar);
+  font-weight: 500;
+  font-size: 0.95rem;
+  border-radius: var(--border-radius);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  background: transparent;
+}
+
+.nav-item i {
+  font-size: 1.25rem;
+  width: 24px;
+  text-align: center;
+  opacity: 0.8;
+  color: var(--primary-light);
+  transition: all var(--transition-fast);
+}
+
+.nav-item:hover {
+  background-color: var(--bg-sidebar-hover);
+  color: white;
+  transform: translateX(4px);
+}
+
+.nav-item:hover i {
+  opacity: 1;
+  color: var(--primary-color);
+  transform: scale(1.1);
+}
+
+.nav-item.active {
+  background: var(--primary-gradient);
+  color: white;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.nav-item.active i {
+  color: white;
+  opacity: 1;
+}
+
+/* Add more spacing between cards for a breathable design */
+.card {
+  margin-bottom: 2rem !important;
+}
+
+.stat-card {
+  padding: 2rem !important;
+}
+
+/* ==========================================================================
+   Topbar Right — always inline flex
+   ========================================================================== */
+.topbar-right {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.75rem !important;
+}
+
+.topbar .user-profile .user-info {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  gap: 0;
+}
+
+.topbar .user-profile .user-info .name {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--text-main);
+  white-space: nowrap;
+  display: block;
+}
+
+.topbar .user-profile .user-info .role {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  display: block;
+  text-transform: capitalize;
+}
+
+/* ==========================================================================
+   EmPay Brand Logo — EP Monogram
+   ========================================================================== */
+
+/* Auth page logo box */
+.auth-logo-wrapper {
+  width: 72px !important;
+  height: 72px !important;
+  background: var(--primary-gradient) !important;
+  border-radius: 20px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 auto 0.75rem !important;
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.45) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.ep-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.ep-logo-text {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: white;
+  letter-spacing: -1px;
+  font-family: 'Inter', sans-serif;
+  position: relative;
+  z-index: 2;
+}
+
+.ep-logo-dot {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 10px;
+  height: 10px;
+  background: rgba(255,255,255,0.6);
+  border-radius: 50%;
+  z-index: 2;
+}
+
+/* Auth brand name below logo */
+.auth-brand-name {
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: var(--text-main);
+  margin-bottom: 0.25rem;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Sidebar mini logo */
+.sidebar-ep-logo {
+  width: 34px;
+  height: 34px;
+  background: var(--primary-gradient);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+  flex-shrink: 0;
+}
+
+.sidebar-ep-logo span {
+  font-size: 0.8rem;
+  font-weight: 900;
+  color: white;
+  letter-spacing: -0.5px;
+  font-family: 'Inter', sans-serif;
+}
