@@ -42,6 +42,41 @@
 
 ---
 
+## 📁 Project Structure
+
+```text
+empay-hrms/
+├── backend/
+│   ├── config/             # Database configuration
+│   ├── controllers/        # Business logic for each module
+│   ├── middleware/         # Auth, Role, and Security middleware
+│   ├── models/             # Mongoose schemas (Employee, Leave, Attendance, etc.)
+│   ├── routes/             # API route definitions
+│   ├── utils/              # Helper functions (Payroll, Holidays, PDF)
+│   └── server.js           # Entry point
+├── frontend/
+│   └── public/             # Static assets (HTML, CSS, JS)
+│       ├── assets/
+│       │   ├── css/        # Premium Glassmorphism styles
+│       │   └── js/         # SPA Logic & API interactions
+│       └── index.html      # Main entry point
+└── README.md
+```
+
+---
+
+## 👥 User Roles & Permissions
+
+| Role | Permissions |
+| :--- | :--- |
+| **Admin** | Full system access, Manage Employees, System Settings, Bulk Reports. |
+| **HR Manager** | Approve/Reject Leaves, Manage Attendance, View Employee Profiles. |
+| **Payroll Officer** | Process Salaries, Generate Payruns, Manage Allowances/Deductions. |
+| **Employee** | Check-in/out, Apply for Leaves, View personal Payslips, Profile management. |
+
+
+---
+
 ## 🚀 Getting Started
 
 ### Prerequisites
@@ -52,7 +87,7 @@
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/your-username/empay-hrms.git
+   git clone https://github.com/DakshSavani13/Empay.git
    cd empay-hrms
    ```
 
@@ -90,6 +125,28 @@
 
 ---
 
+## 🔌 API Documentation (Summary)
+
+### Authentication
+- `POST /api/auth/register` - Create a new account.
+- `POST /api/auth/login` - User login.
+
+### Attendance
+- `POST /api/attendance/check-in` - Mark attendance start (Geofenced).
+- `POST /api/attendance/check-out` - Mark attendance end (Geofenced).
+- `GET /api/attendance/history` - Retrieve attendance logs.
+
+### Leaves
+- `POST /api/leaves/apply` - Submit a leave request.
+- `GET /api/leaves/my-leaves` - View own leave status.
+- `PATCH /api/leaves/:id/status` - Admin: Approve/Reject requests.
+
+### Payroll
+- `POST /api/payroll/generate` - Process monthly salaries.
+- `GET /api/payroll/payslip/:id` - Download PDF payslip.
+
+---
+
 ## 🧪 Security Hardening (Post-Audit)
 This version of EmPay has undergone a technical audit to resolve critical functional bugs:
 - Fixed **Geofencing bypass** by enforcing coordinate checks on checkout.
@@ -104,4 +161,4 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
 
-**Built with ❤️ by [Your Name/Team]**
+**Built with ❤️ by DAKSH SAVANI**
