@@ -154,10 +154,6 @@ This version of EmPay has undergone a technical audit to resolve critical functi
 - Implemented **Race Condition Fixes** for registration IDs using random hex suffixes.
 - Added **Dynamic Fallbacks** for frontend script loading to prevent UI crashes.
 
----
-
-## 📄 License
-Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
 
