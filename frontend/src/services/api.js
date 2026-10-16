@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5001/api';
+const API_URL = import.meta.env.VITE_API_URL || '/api';
 
 class ApiService {
   constructor() {
@@ -36,7 +36,7 @@ class ApiService {
       }
 
       const response = await fetch(`${API_URL}${endpoint}`, config);
-      
+
       // Handle PDF downloads specifically
       if (response.headers.get('content-type')?.includes('application/pdf')) {
         const blob = await response.blob();
@@ -63,32 +63,33 @@ class ApiService {
   // Auth
   login(email, password) { return this.request('/auth/login', { method: 'POST', body: { email, password } }); }
   register(data) { return this.request('/auth/register', { method: 'POST', body: data }); }
+  signup(data) { return this.request('/auth/signup', { method: 'POST', body: data }); }
   getMe() { return this.request('/auth/me'); }
-  changePassword(oldPassword, newPassword) { 
-    return this.request('/auth/change-password', { 
-      method: 'POST', 
-      body: { oldPassword, newPassword } 
-    }); 
+  changePassword(oldPassword, newPassword) {
+    return this.request('/auth/change-password', {
+      method: 'POST',
+      body: { oldPassword, newPassword }
+    });
   }
   getAllUsers() { return this.request('/auth/users'); }
   updateUserRole(id, role) { return this.request(`/auth/role/${id}`, { method: 'PUT', body: { role } }); }
 
   // Attendance
-  checkIn(latitude, longitude) { 
+  checkIn(latitude, longitude) {
     const localDate = new Date().toLocaleDateString('en-CA');
-    return this.request('/attendance/checkin', { method: 'POST', body: { latitude, longitude, localDate } }); 
+    return this.request('/attendance/checkin', { method: 'POST', body: { latitude, longitude, localDate } });
   }
-  checkOut(latitude, longitude) { 
+  checkOut(latitude, longitude) {
     const localDate = new Date().toLocaleDateString('en-CA');
-    return this.request('/attendance/checkout', { method: 'POST', body: { latitude, longitude, localDate } }); 
+    return this.request('/attendance/checkout', { method: 'POST', body: { latitude, longitude, localDate } });
   }
-  getTodayAttendance() { 
+  getTodayAttendance() {
     const localDate = new Date().toLocaleDateString('en-CA');
-    return this.request(`/attendance/today?localDate=${localDate}`); 
+    return this.request(`/attendance/today?localDate=${localDate}`);
   }
-  getMyAttendance(month, year) { 
+  getMyAttendance(month, year) {
     const qs = month && year ? `?month=${month}&year=${year}` : '';
-    return this.request(`/attendance/my${qs}`); 
+    return this.request(`/attendance/my${qs}`);
   }
   getAllAttendance(date) {
     const qs = date ? `?date=${date}` : '';
@@ -132,3 +133,4 @@ class ApiService {
 }
 
 const api = new ApiService();
+export default api;

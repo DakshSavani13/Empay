@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const path = require('path');
+const fs = require('fs');
 const connectDB = require('./config/db');
 
 dotenv.config();
@@ -36,8 +37,14 @@ const authLimiter = rateLimit({
 app.use('/api', limiter);
 app.use('/api/auth/login', authLimiter);
 
-// Serve frontend static files
-app.use(express.static(path.join(__dirname, '..', 'frontend', 'public')));
+// Serve frontend static files (support both built React app in dist and static assets in public)
+const frontendDist = path.join(__dirname, '..', 'frontend', 'dist');
+const frontendPublic = path.join(__dirname, '..', 'frontend', 'public');
+
+if (fs.existsSync(frontendDist)) {
+  app.use(express.static(frontendDist));
+}
+app.use(express.static(frontendPublic));
 
 // API Routes
 app.use('/api/auth', require('./routes/authRoutes'));
@@ -51,7 +58,10 @@ app.use('/api/reports', require('./routes/reportRoutes'));
 // SPA fallback - serve index.html for all other routes
 app.get('*', (req, res) => {
   if (!req.path.startsWith('/api')) {
-    res.sendFile(path.join(__dirname, '..', 'frontend', 'public', 'index.html'));
+    const indexPath = fs.existsSync(path.join(frontendDist, 'index.html'))
+      ? path.join(frontendDist, 'index.html')
+      : path.join(frontendPublic, 'index.html');
+    res.sendFile(indexPath);
   }
 });
 
