@@ -18,15 +18,28 @@ function getDistanceMeters(lat1, lon1, lat2, lon2) {
  * Check if given coordinates are within the office geofence
  */
 function isWithinGeofence(empLat, empLon) {
-  const distance = getDistanceMeters(
-    empLat,
-    empLon,
-    parseFloat(process.env.OFFICE_LATITUDE),
-    parseFloat(process.env.OFFICE_LONGITUDE)
-  );
+  const officeLat = parseFloat(process.env.OFFICE_LATITUDE) || 23.0225;
+  const officeLon = parseFloat(process.env.OFFICE_LONGITUDE) || 72.5714;
+  const allowedRadius = parseFloat(process.env.ALLOWED_RADIUS_METERS) || 100;
+
+  const distance = getDistanceMeters(empLat, empLon, officeLat, officeLon);
+  const roundedDist = Math.round(distance);
+
+  // If geofence is disabled, or in development / demo mode, allow check-in without blocking
+  if (
+    process.env.DISABLE_GEOFENCE === 'true' ||
+    process.env.NODE_ENV === 'development' ||
+    process.env.DEMO_MODE === 'true'
+  ) {
+    return {
+      isWithin: true,
+      distance: roundedDist
+    };
+  }
+
   return {
-    isWithin: distance <= parseFloat(process.env.ALLOWED_RADIUS_METERS),
-    distance: Math.round(distance)
+    isWithin: distance <= allowedRadius,
+    distance: roundedDist
   };
 }
 

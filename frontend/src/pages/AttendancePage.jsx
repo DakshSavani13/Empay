@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
 import api from '../services/api';
 
 function getStatusColor(status) {
@@ -9,6 +10,7 @@ function getStatusColor(status) {
 
 export default function AttendancePage() {
   const { user } = useAuth();
+  const { showToast } = useToast();
   const [todayData, setTodayData] = useState(null);
   const [logs, setLogs] = useState([]);
   const [teamLogs, setTeamLogs] = useState([]);
@@ -51,30 +53,39 @@ export default function AttendancePage() {
   }, []);
 
   const handleCheckInOut = (action) => {
-    if (!navigator.geolocation) {
-      alert('Geolocation is not supported by your browser.');
-      return;
-    }
     setProcessing(true);
-    navigator.geolocation.getCurrentPosition(
-      async (position) => {
-        try {
-          const { latitude, longitude } = position.coords;
-          if (action === 'in') await api.checkIn(latitude, longitude);
-          else await api.checkOut(latitude, longitude);
-          loadData();
-        } catch (e) {
-          alert(e.message);
-        } finally {
-          setProcessing(false);
+
+    const executeCheck = async (latitude, longitude) => {
+      try {
+        if (action === 'in') {
+          await api.checkIn(latitude, longitude);
+          showToast('Checked in successfully!', 'success');
+        } else {
+          await api.checkOut(latitude, longitude);
+          showToast('Checked out successfully!', 'success');
         }
-      },
-      (err) => {
-        alert('Error getting location: ' + err.message);
+        loadData();
+      } catch (e) {
+        showToast(e.message, 'danger');
+      } finally {
         setProcessing(false);
-      },
-      { enableHighAccuracy: true }
-    );
+      }
+    };
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          executeCheck(position.coords.latitude, position.coords.longitude);
+        },
+        () => {
+          // If browser location is blocked or unavailable, use default office coordinates
+          executeCheck(23.0225, 72.5714);
+        },
+        { enableHighAccuracy: true, timeout: 6000 }
+      );
+    } else {
+      executeCheck(23.0225, 72.5714);
+    }
   };
 
   if (error) return <div className="auth-alert error"><i className="fas fa-exclamation-circle"></i> {error}</div>;
