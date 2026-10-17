@@ -21,8 +21,8 @@ exports.register = async (req, res) => {
       return res.status(400).json({ success: false, message: 'User already exists with this email.' });
     }
 
-    const compName = companyName || 'Odoo India';
-    let compPrefix = 'OI';
+    const compName = companyName || 'EmPay Solutions';
+    let compPrefix = 'ES';
     if (compName.split(' ').length > 1) {
       compPrefix = compName.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
     } else {

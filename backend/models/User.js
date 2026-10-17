@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
   },
   companyName: {
     type: String,
-    default: 'Odoo India'
+    default: 'EmPay Solutions'
   },
   name: {
     type: String,
